@@ -15,12 +15,27 @@ namespace SecurityLibrary
 
         public string Decrypt(string cipherText, string key)
         {
-            throw new NotImplementedException();
+            StringBuilder decryptedText = new StringBuilder(cipherText);
+
+            for (int i = 0; i < cipherText.Length; i++)
+            {
+                char currentCipherChar = cipherText[i].ToString().ToLower()[0];
+                decryptedText[i] = (char) ('a' + key.IndexOf(currentCipherChar));
+            }
+
+            return decryptedText.ToString();
         }
 
         public string Encrypt(string plainText, string key)
         {
-            throw new NotImplementedException();
+            StringBuilder encryptedText = new StringBuilder(plainText);
+
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                encryptedText[i] = key[encryptedText[i] - 'a'];
+            }
+
+            return encryptedText.ToString().ToUpper();
         }
 
         /// <summary>
