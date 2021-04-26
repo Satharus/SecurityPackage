@@ -47,7 +47,8 @@ namespace SecurityLibrary
             if (key >= 26) key -= 26;
             else if (key < 0) key += 26;
 
-            return Math.Abs(key);
+            if (key < 0) key *= -1;
+            return key;
         }
     }
 }

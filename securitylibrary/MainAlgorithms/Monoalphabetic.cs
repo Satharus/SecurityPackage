@@ -10,7 +10,34 @@ namespace SecurityLibrary
     {
         public string Analyse(string plainText, string cipherText)
         {
-            throw new NotImplementedException();
+            StringBuilder key = new StringBuilder("**************************");
+            bool[] charExists = new bool[26];
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                int index = plainText[i] - 'a';
+                char cipherCharacter = cipherText[i];
+                key[index] = cipherCharacter;
+                charExists[cipherCharacter - 'A'] = true;
+            }
+
+            //Replace the rest of the characters in order to have a possible key which includes the whole alphabet
+            for (int i = 0; i < key.Length; i++)
+            {
+                if (key[i] == '*')
+                {
+                    for (int j = 0; j < 26; j++)
+                    {
+                        if (!charExists[j])
+                        {
+                            key[i] = (char)('A' + j);
+                            charExists[j] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return key.ToString().ToLower();
         }
 
         public string Decrypt(string cipherText, string key)

@@ -12,11 +12,10 @@ F:/GoogleDriveSync/Security 2018-2019/Staff/Labs/Lab 1/SecurityPackage/SecurityL
 F:/GoogleDriveSync/Security 2018-2019/Staff/Labs/Lab 1/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.csprojResolveAssemblyReference.cache
 F:/GoogleDriveSync/Security 2018-2019/Staff/Labs/Lab 1/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.dll
 F:/GoogleDriveSync/Security 2018-2019/Staff/Labs/Lab 1/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.pdb
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/bin/Debug/SecurityLibrary.dll
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/bin/Debug/SecurityLibrary.pdb
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.csprojResolveAssemblyReference.cache
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.csproj.CoreCompileInputs.cache
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.dll
-C:/Users/Satharus/Documents/SecurityPackage/SecurityLibrary/obj/Debug/SecurityLibrary.pdb
 /home/phate/Documents/SecurityPackage/securitylibrary/obj/Debug/SecurityLibrary.dll
 /home/phate/Documents/SecurityPackage/securitylibrary/obj/Debug/SecurityLibrary.pdb
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\bin\Debug\SecurityLibrary.dll
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\bin\Debug\SecurityLibrary.pdb
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.dll
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.pdb
