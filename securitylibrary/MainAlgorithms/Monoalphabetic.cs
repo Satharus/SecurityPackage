@@ -47,7 +47,7 @@ namespace SecurityLibrary
             for (int i = 0; i < cipherText.Length; i++)
             {
                 char currentCipherChar = cipherText[i].ToString().ToLower()[0];
-                decryptedText[i] = (char) ('a' + key.IndexOf(currentCipherChar));
+                decryptedText[i] = (char)('a' + key.IndexOf(currentCipherChar));
             }
 
             return decryptedText.ToString();
@@ -96,9 +96,55 @@ namespace SecurityLibrary
         /// </summary>
         /// <param name="cipher"></param>
         /// <returns>Plain text</returns>
+        /// 
+
+        Dictionary<Char, Double> frequenciesInEnglish = new Dictionary<char, double>();
+        Double[] frequenciesInEnglishPercentage = {8.04, 1.54, 3.06, 3.99, 12.51, 2.30, 1.96, 5.49, 7.26, 0.16, 0.67, 4.14, 2.53, 7.09, 7.60, 2.00, 0.11, 6.12, 6.54, 9.25, 2.71, 0.99, 1.92, 0.19, 1.73, 0.09};
         public string AnalyseUsingCharFrequency(string cipher)
         {
-            throw new NotImplementedException();
+            StringBuilder plaintext = new StringBuilder(cipher);
+            Dictionary<Char, Double> frequenciesInCipher = new Dictionary<char, double>();
+
+            for (char i = 'A'; i <= 'Z'; i++)
+            {
+                frequenciesInEnglish.Add(i, frequenciesInEnglishPercentage[i - 'A']);
+                frequenciesInCipher.Add(i, 0);
+            }
+
+            foreach (char a in cipher)
+            {
+                frequenciesInCipher[a] += 1;
+            }
+
+            for (char i = 'A'; i <= 'Z'; i++)
+            {
+                frequenciesInCipher[i] /= cipher.Length;
+            }
+
+            var frequenciesInEnglishList = frequenciesInEnglish.ToList();
+            frequenciesInEnglishList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+
+            var frequenciesInCipherList = frequenciesInCipher.ToList();
+            frequenciesInCipherList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
+
+            bool[] charReplaced = new bool[cipher.Length];
+
+            for (int i = 0; i < 26; i++)
+            {
+                char charInCipher = frequenciesInCipherList[i].Key;
+                char charInEnglish = frequenciesInEnglishList[i].Key;
+
+                for (int j = 0; j < cipher.Length; j++)
+                {
+                    if (plaintext[j] == charInCipher && charReplaced[j] != true)
+                    {
+                        plaintext[j] = charInEnglish;
+                        charReplaced[j] = true;
+                    }
+                }
+            }
+
+            return plaintext.ToString();
         }
     }
 }

@@ -19,3 +19,4 @@ C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\bin\Debug\SecurityLi
 C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csproj.CoreCompileInputs.cache
 C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.dll
 C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.pdb
+C:\Users\Satharus\Documents\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csprojResolveAssemblyReference.cache
