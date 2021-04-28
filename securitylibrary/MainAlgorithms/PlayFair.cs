@@ -57,7 +57,7 @@ namespace SecurityLibrary
             {
                 int r1 = 0, c1 = 0, r2 = 0, c2 = 0;
                 for (int j = 0; j < 5; j++)
-                {
+                { 
                     for (int k = 0; k < 5; k++)
                     {
                         if (cipherText[i] == keyArray[j, k])
