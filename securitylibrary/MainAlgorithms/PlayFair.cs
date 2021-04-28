@@ -8,22 +8,21 @@ namespace SecurityLibrary
 {
     public class PlayFair : ICryptographic_Technique<string, string>
     {
-
         public string Decrypt(string cipherText, string key)
         {
             string val = "";
             return val;
         }
 
-        static public string alphapitics = "abcdefghijklmnopqrstuvwxyz";
-        static public int[] char_checked = new int[26];
-        static public void mem()
+        public string alphapitics = "abcdefghijklmnopqrstuvwxyz";
+        public int[] char_checked = new int[26];
+        public void mem()
         {
             for (int i = 0; i < 25; i++)
                 char_checked[i] = 0;
         }
         
-        static public void print_array(char[,] arr_key)
+        public void print_array(char[,] arr_key)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -32,7 +31,7 @@ namespace SecurityLibrary
                 Console.Write("\n");
             }
         }
-        static public char[,] mem_2d(char[,] arr_key, int i , int j) { 
+        public char[,] mem_2d(char[,] arr_key, int i , int j) { 
             for (int k = 0; k < i; k++)
             {
                 for (int x = 0; x < j; x++)
@@ -41,7 +40,7 @@ namespace SecurityLibrary
             }
             return arr_key;
         }
-        static public char[,] Generate_array(char[,] arr_key, string key)
+        public char[,] Generate_array(char[,] arr_key, string key)
         {
             mem();
             arr_key = mem_2d(arr_key, 5, 5);
@@ -51,14 +50,9 @@ namespace SecurityLibrary
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
-<<<<<<< HEAD
-                { 
-                    for (int k = 0; k < 5; k++)
-=======
                 {
                     found = 0;
                     for (int k = index_of_key; k < key.Length; k++)
->>>>>>> d0f73dacbaf6f8ecef62ccc05246b4814efaa45a
                     {
                         
                         if (char_checked[((key[k] - 97) % alphapitics.Length)] == 0)
@@ -101,7 +95,7 @@ namespace SecurityLibrary
             }
             return arr_key;
         }
-        static public string Handle_duplicate(string value)
+        public string Handle_duplicate(string value)
         {
             for (int i = 0; i < value.Length - 1; i += 2)
             {
@@ -114,7 +108,7 @@ namespace SecurityLibrary
             if (value.Length % 2 == 1) value += 'x';
             return value;
         }
-        static public int[] getPosition(char[,] arr_key, char first, char second)
+        public int[] getPosition(char[,] arr_key, char first, char second)
         {
             int[] positions = new int[4];
             for (int i = 0; i < 4; i++)
