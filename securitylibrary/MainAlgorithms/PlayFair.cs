@@ -8,22 +8,85 @@ namespace SecurityLibrary
 {
     public class PlayFair : ICryptographic_Technique<string, string>
     {
-
-        public string Decrypt(string cipherText, string key)
+        public string RemoveX(string value)
         {
-            string val = "";
+ 
+            string val = value.Substring(0, 1);
+            for (int i = 1; i < value.Length - 1; i++)
+            {
+                if (!(value[i] == 'x' && value[i - 1] == value[i + 1] && i%2!=0))
+                {
+                    val += value.Substring(i, 1);
+                }
+            }
+            if (value[value.Length - 1] != 'x')
+                val += value.Substring(value.Length - 1, 1);
             return val;
         }
+        public string Decrypt(string cipherText, string key)
+        {
+            cipherText = cipherText.ToLower();
+            char[,] arr_key = new char[5, 5];
 
-        static public string alphapitics = "abcdefghijklmnopqrstuvwxyz";
-        static public int[] char_checked = new int[26];
-        static public void mem()
+            string ret = "";
+            int[] positions = new int[4];
+
+            arr_key = Generate_array(arr_key, key);
+
+            for (int i = 0; i < cipherText.Length; i += 2)
+            {
+
+                char decrpyt_char1;
+                char decrypt_char2;
+
+                positions = getPosition(arr_key, cipherText[i], cipherText[i + 1]);
+                if (positions[0] == positions[2])
+                {
+                    int col1 = (positions[1] - 1) % 5;
+                    int col2 = (positions[3] - 1) % 5;
+                    if (col1 < 0) col1 += 5;
+                    if (col2 < 0) col2 += 5;
+                    decrpyt_char1 = arr_key[positions[0], col1];
+                    decrypt_char2 = arr_key[positions[2], col2];
+
+                    //same row
+                }
+                else if (positions[1] == positions[3])
+                {
+                    int row1 = (positions[0] - 1) % 5;
+                    int row2 = (positions[2] - 1) % 5;
+                    if (row1 < 0) row1 += 5;
+                    if (row2 < 0) row2 += 5;
+                    decrpyt_char1 = arr_key[row1, positions[1]];
+                    decrypt_char2 = arr_key[row2, positions[3]];
+                    //same column
+                }
+                else
+                {
+                    decrpyt_char1 = arr_key[(positions[0]), (positions[3])];
+                    decrypt_char2 = arr_key[(positions[2]), (positions[1])];
+                    //diagonal
+                }
+
+
+                ret += decrpyt_char1;
+                ret += decrypt_char2;
+
+            }
+            ret = RemoveX(ret);
+            ret = ret.ToUpper();
+            return ret;
+        }
+
+        public string alphapitics = "abcdefghijklmnopqrstuvwxyz";
+        public int[] char_checked = new int[26];
+        public void mem()
         {
             for (int i = 0; i < 25; i++)
                 char_checked[i] = 0;
         }
         
-        static public void print_array(char[,] arr_key)
+        public void print_array(char[,] arr_key)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -32,7 +95,7 @@ namespace SecurityLibrary
                 Console.Write("\n");
             }
         }
-        static public char[,] mem_2d(char[,] arr_key, int i , int j) { 
+        public char[,] mem_2d(char[,] arr_key, int i , int j) { 
             for (int k = 0; k < i; k++)
             {
                 for (int x = 0; x < j; x++)
@@ -41,7 +104,7 @@ namespace SecurityLibrary
             }
             return arr_key;
         }
-        static public char[,] Generate_array(char[,] arr_key, string key)
+        public char[,] Generate_array(char[,] arr_key, string key)
         {
             mem();
             arr_key = mem_2d(arr_key, 5, 5);
@@ -96,7 +159,7 @@ namespace SecurityLibrary
             }
             return arr_key;
         }
-        static public string Handle_duplicate(string value)
+        public string Handle_duplicate(string value)
         {
             for (int i = 0; i < value.Length - 1; i += 2)
             {
@@ -109,7 +172,7 @@ namespace SecurityLibrary
             if (value.Length % 2 == 1) value += 'x';
             return value;
         }
-        static public int[] getPosition(char[,] arr_key, char first, char second)
+        public int[] getPosition(char[,] arr_key, char first, char second)
         {
             int[] positions = new int[4];
             for (int i = 0; i < 4; i++)
