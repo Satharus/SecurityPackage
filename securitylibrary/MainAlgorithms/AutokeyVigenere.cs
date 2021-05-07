@@ -47,7 +47,17 @@ namespace SecurityLibrary
                 keyStream.Append(keyChar);
             }
 
-            return keyStream.ToString().ToLower();
+            int max = -1;
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                int idx = keyStream.ToString().IndexOf(plainText.Substring(0, i));
+                if ( idx > max)
+                {
+                    max = idx;
+                }
+            }
+
+            return keyStream.ToString().ToLower().Substring(0, max);
         }
 
         public string Decrypt(string cipherText, string key)
