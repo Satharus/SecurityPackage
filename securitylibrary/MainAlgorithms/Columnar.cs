@@ -20,7 +20,51 @@ namespace SecurityLibrary
 
         public string Encrypt(string plainText, List<int> key)
         {
-            throw new NotImplementedException();
+            int columns = key.Count;
+            int rows = plainText.Length / columns;
+
+            if (plainText.Length % columns != 0) rows++;
+
+
+            char[,] tempCipher = new char[rows, columns];
+            StringBuilder cipherText = new StringBuilder();
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int k = 0; k < columns; k++)
+                {
+
+                    int index = (i * columns) + k;
+                    if (index < plainText.Length)
+                    {
+                        tempCipher[i, k] = plainText[index];
+                    }
+                    else
+                    {
+                        tempCipher[i, k] = 'x';
+                    }
+                }
+            }
+
+            StringBuilder[] cipherTextOrdered = new StringBuilder[columns];
+
+            int j = 0;
+            foreach (int keyColumn in key)
+            {
+                cipherTextOrdered[keyColumn - 1] = new StringBuilder();
+                for (int i = 0; i < rows; i++)
+                {
+                    cipherTextOrdered[keyColumn-1].Append(tempCipher[i, j]);
+                }
+                j++;
+            }
+
+            foreach (StringBuilder column in cipherTextOrdered)
+            {
+                cipherText.Append(column.ToString());
+            }
+
+            return cipherText.ToString().ToUpper();
         }
     }
 }
