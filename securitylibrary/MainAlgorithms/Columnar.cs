@@ -8,60 +8,65 @@ namespace SecurityLibrary
 {
     public class Columnar : ICryptographicTechnique<string, List<int>>
     {
-        List<List<int>> testedPermutations = new List<List<int>>();
-        public List<int> GetPermutations(int count)
+        List<List<int>> allPermutations = new List<List<int>>();
+
+        void Permute(int[] nums)
         {
-            List<int> result = new List<int>();
-            for (int i = 0; i < count; i++)
+            DoPermute(nums, 0, nums.Length - 1);
+        }
+
+        void DoPermute(int[] nums, int start, int end)
+        {
+            if (start == end)
             {
-                Random rand = new Random();
-                int num = rand.Next(1, count + 1);
-                while (result.Contains(num))
+                allPermutations.Add(new List<int>(nums));
+            }
+            else
+            {
+                for (var i = start; i <= end; i++)
                 {
-                    num = rand.Next(1, count + 1);
+                    Swap(ref nums[start], ref nums[i]);
+                    DoPermute(nums, start + 1, end);
+                    Swap(ref nums[start], ref nums[i]);
                 }
-                result.Add(num);
             }
-            if (testedPermutations.Contains(result))
-                return GetPermutations(count);
-            testedPermutations.Add(result);
-            return result;
         }
-        public int factorial(int n)
+
+        void Swap(ref int a, ref int b)
         {
-            int fact = 1;
-            while (n > 0)
-            {
-                fact *= n;
-                n--;
-            }
-            return fact;
+            var temp = a;
+            a = b;
+            b = temp;
         }
+
         public List<int> Analyse(string plainText, string cipherText)
         {
             List<int> key = new List<int>();
             int columns = 2;
             while (columns < cipherText.Length)
             {
-                int limit = factorial(columns);
-                while (testedPermutations.Count < limit)
+                int[] defaultOrder = new int[columns];
+                for (int i = 0; i < columns; i++)
                 {
-                    key = GetPermutations(columns);
-                    string encryptedPlaintext = Encrypt(plainText, key).ToLower();
-                    if (encryptedPlaintext.Equals(cipherText.ToLower(), StringComparison.InvariantCultureIgnoreCase))
+                    defaultOrder[i] = i + 1;
+                }
+                Permute(defaultOrder);
+                foreach(var a in allPermutations)
+                {
+                    key = a;
+                    string encryptedPlaintext = Encrypt(plainText, key);
+
+                    if (encryptedPlaintext.Equals(cipherText, StringComparison.InvariantCultureIgnoreCase))
                     {
                         return key;
                     }
                 }
-                testedPermutations.Clear();
+                allPermutations.Clear();
                 columns++;
-
-                //Temporary condition to make the tests fail instead of getting into infinite loops.
-                if (columns > 7) return new List<int>();
             }
 
-
-            return new List<int>();
+            // No valid key found (pretty much impossible, but C# needs a default return path to compile anyway)
+            return new List<int> { -1 };
         }
 
         public string Decrypt(string cipherText, List<int> key)
@@ -119,6 +124,11 @@ namespace SecurityLibrary
                 }
             }
 
+            for (int i = 0; i < plainText.Length; i++)
+            {
+                if (plainText[i] == '.') plainText.Remove(i, 1);
+            }
+
             return plainText.ToString().ToLower();
         }
 
@@ -144,7 +154,7 @@ namespace SecurityLibrary
                     }
                     else
                     {
-                        tempCipher[i, k] = 'x';
+                        tempCipher[i, k] = '.';
                     }
                 }
             }
@@ -164,7 +174,15 @@ namespace SecurityLibrary
 
             foreach (StringBuilder column in cipherTextOrdered)
             {
-                cipherText.Append(column.ToString());
+                StringBuilder temp = column;
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i] == '.')
+                    {
+                        temp.Remove(i, 1);
+                    }
+                }
+                cipherText.Append(temp.ToString());
             }
 
             return cipherText.ToString().ToUpper();
