@@ -28,7 +28,13 @@ namespace SecurityLibrary
 
             float keyy = (float)key;
             float val = cipherText.Length / keyy;
-            double plaintext_len = Math.Ceiling(val);
+            int value = cipherText.Length / key;
+            double plaintext_len;
+            if (val != value)
+                plaintext_len = value + 1;
+            else
+                plaintext_len = value;
+        
             int len = Convert.ToInt32(plaintext_len);
             string ret = "";
             List<string> plain = new List<string>();
