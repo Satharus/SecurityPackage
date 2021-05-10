@@ -11,6 +11,19 @@ namespace SecurityLibrary
     /// </summary>
     public class HillCipher :  ICryptographicTechnique<List<int>, List<int>>
     {
+        private int findB(int det)
+        {
+            int i = 1;
+            while (true)
+            {
+                if (((i % 26) * (det % 26)) % 26 == 1)
+                {
+                    break;
+                }
+                i++;
+            }
+            return i;
+        }
         private int calcSqrt(int nmbr)
         {
             if (nmbr == 0)
@@ -74,6 +87,10 @@ namespace SecurityLibrary
                     tmp += key[i][j] * plainText[j];
                 }
                 tmp = tmp % 26;
+                while (tmp < 0)
+                {
+                    tmp += 26;
+                }
                 res.Add(tmp);
             }
             return res;
@@ -93,12 +110,15 @@ namespace SecurityLibrary
                     List<int> tmp2 = new List<int>();
                     for (int j = 0; j < m; j++)
                     {
-                        if (i != k && j != k)
+                        if (i != 0 && j != k)
                         {
                             tmp2.Add(matrix[i][j]);
                         }
                     }
-                    tmp.Add(tmp2);
+                    if (tmp2.Count != 0)
+                    {
+                        tmp.Add(tmp2);
+                    }
                 }
                 if (k % 2 == 0)
                 {
@@ -130,7 +150,10 @@ namespace SecurityLibrary
                                 tmp2.Add(matrix[i][j]);
                             }
                         }
-                        tmp.Add(tmp2);
+                        if (tmp2.Count != 0)
+                        {
+                            tmp.Add(tmp2);
+                        }
                     }
                     int minor = calcDeterminant(tmp, m - 1);
                     tmpRes.Add(minor);
@@ -169,26 +192,30 @@ namespace SecurityLibrary
         private List<List<int>> inverseMatrix(List<List<int>> matrix, int m)
         {
             int det = calcDeterminant(matrix, m);
+            while(det < 0){
+                det += 26;
+            }
+            det = findB(det);
             if (m == 2)
             {
                 int tmp = matrix[0][0] * det;
                 matrix[0][0] = matrix[1][1] * det;
                 matrix[1][1] = tmp;
 
-                matrix[0][1] *= -1;
-                matrix[1][0] *= -1;
+                matrix[0][1] *= (-1 * det);
+                matrix[1][0] *= (-1 * det);
                 return matrix;
             }
             matrix = makeMinorsMatrix(matrix, m);
             matrix = makeCofactorsMatrix(matrix, m);
-            matrix = makeAdjointMatrix(matrix, m);
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < m; j++)
                 {
-                    matrix[i][j] *= (1 / det);
+                    matrix[i][j] *= det;
                 }
             }
+            matrix = makeAdjointMatrix(matrix, m);
             return matrix;
         }
         public List<int> Analyse(List<int> plainText, List<int> cipherText)
