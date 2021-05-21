@@ -45,3 +45,11 @@ C:\Users\danya\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest
 C:\Users\danya\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.csproj.CopyComplete
 C:\Users\danya\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.dll
 C:\Users\danya\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.pdb
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityPackageTest.dll
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityPackageTest.pdb
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityLibrary.dll
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityLibrary.pdb
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.csprojResolveAssemblyReference.cache
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.csproj.CoreCompileInputs.cache
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.dll
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.pdb

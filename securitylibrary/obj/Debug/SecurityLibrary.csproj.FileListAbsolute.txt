@@ -26,3 +26,9 @@ C:\Users\danya\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csprojA
 C:\Users\danya\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csproj.CoreCompileInputs.cache
 C:\Users\danya\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.dll
 C:\Users\danya\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.pdb
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\bin\Debug\SecurityLibrary.dll
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\bin\Debug\SecurityLibrary.pdb
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.dll
+C:\Users\Satharus\Documents\College\SecurityPackage\SecurityLibrary\obj\Debug\SecurityLibrary.pdb
