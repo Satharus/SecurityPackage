@@ -53,3 +53,10 @@ C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debu
 C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.csproj.CoreCompileInputs.cache
 C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.dll
 C:\Users\Satharus\Documents\College\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.pdb
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityPackageTest.dll
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityPackageTest.pdb
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityLibrary.dll
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\bin\Debug\SecurityLibrary.pdb
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.csprojResolveAssemblyReference.cache
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.dll
+C:\Users\ahmed\Documents\Projects\SecurityPackage\SecurityPackageTest\obj\Debug\SecurityPackageTest.pdb
