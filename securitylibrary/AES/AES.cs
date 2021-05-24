@@ -89,7 +89,9 @@ namespace SecurityLibrary.AES
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    newMatrix[i, j] = matrix[i, (j + i) % 4];
+                    int newJ = (j - i) % 4;
+                    if (newJ < 0) newJ += 4;
+                    newMatrix[i, j] = matrix[i, newJ];
                 }
             }
             return newMatrix;
@@ -106,6 +108,21 @@ namespace SecurityLibrary.AES
                 }
             }
             return newColumn;
+        }
+        private byte[,] substituteMatrix(byte[,] matrix)
+        {
+            byte[,] newMatrix = new byte[4, 4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    string tmp = Convert.ToString(matrix[i, j], 16);
+                    int newI = Convert.ToInt32(tmp[0].ToString(), 16);
+                    int newJ = Convert.ToInt32(tmp[1].ToString(), 16);
+                    newMatrix[i, j] = sbox[newI, newJ];
+                }
+            }
+                return newMatrix;
         }
         public override string Decrypt(string cipherText, string key)
         {
