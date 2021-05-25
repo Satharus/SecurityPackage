@@ -125,6 +125,43 @@ namespace SecurityLibrary.AES
             }
                 return newMatrix;
         }
+          private byte[,] mixCols(byte[,] shiftedmatrix)
+        {
+            list<byte> mixedMat=new list<byte>();
+            var arrayXor= new byte[4];
+            byte[,] mixedColsMat=new byte[4,4];
+            for(int i=0;i<4;i++)
+            {
+                for(int j=0;j<4;j++)
+                {//i,j * mixcolumn[j,i]
+                    for(int x =0;x<4;x++)
+                    {
+                        if(mixColumnsMatrix[j,x]==2)
+                        {
+                            arrayXor[x]=shiftedmatrix[x,i]<<1;
+                            if(shiftedmatrix[x,i]>127)
+                                arrayXor[x]=arrayXor[x]^27;
+                        }
+                        if(mixColumnsMatrix[j,x]==3)
+                        {
+                            arrayXor[x]=shiftedmatrix[x,i]<<1;
+                            if(shiftedmatrix[x,i]>127)
+                                arrayXor[x]=arrayXor[x]^27;
+                            arrayXor[x]=arrayXor[x]^shiftedmatrix[x,i];
+                        }
+
+
+                        if(mixColumnsMatrix[j,x]==1)
+                        {
+                            arrayXor[x]=shiftedmatrix[x,i];
+                        }
+                    }
+                    var cell=arrayXor[0]^arrayXor[1]^arrayXor[2]^arrayXor[3];
+                    mixedColsMat[j,i]=cell;
+                }
+            }
+            return mixedColsMat;
+        }
         public override string Decrypt(string cipherText, string key)
         {
             throw new NotImplementedException();
