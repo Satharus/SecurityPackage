@@ -103,8 +103,9 @@ namespace SecurityLibrary.AES
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    string tmp = Convert.ToString(matrix[i, j] * column[j], 16);
-                    newColumn[i] = Convert.ToByte(tmp, 16);
+                    byte tmp = Convert.ToByte( Convert.ToString(matrix[i, j] * column[j], 16), 16 );
+                    if (j == 0) newColumn[i] = tmp;    // If newColumn[i] is still empty, add the first multiplication result.
+                    else newColumn[i] = Convert.ToByte( Convert.ToString(newColumn[i] ^ tmp, 16), 16 );
                 }
             }
             return newColumn;
