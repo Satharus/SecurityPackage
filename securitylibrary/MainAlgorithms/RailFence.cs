@@ -8,85 +8,76 @@ namespace SecurityLibrary
 {
     public class RailFence : ICryptographicTechnique<string, int>
     {
-
         public int Analyse(string plainText, string cipherText)
         {
+            string ret;
             int key = 0;
-            string ans = "";
             for (int i = 1; i < plainText.Length; i++)
             {
-                ans = Decrypt(cipherText, i);
-                if (plainText == ans)
+                ret = Encrypt(plainText, i);
+                if (ret == cipherText)
                 {
-                    key = i;
-                    break;
+                    key = i; break;
                 }
             }
             return key;
-
         }
 
         public string Decrypt(string cipherText, int key)
         {
-            char[,] decrypted = new char[100, 100];
 
-            float len = Convert.ToSingle(cipherText.Length);
-            len /= key;
-            int rounded_f = (int)(len + 0.5f);
-
-            int idx = 0;
-            for (int i = 0; i < key; i++)
+            float keyy = (float)key;
+            float val = cipherText.Length / keyy;
+            int value = cipherText.Length / key;
+            double plaintext_len;
+            if (val != value)
+                plaintext_len = value + 1;
+            else
+                plaintext_len = value;
+        
+            int len = Convert.ToInt32(plaintext_len);
+            string ret = "";
+            List<string> plain = new List<string>();
+            int count = 0;
+            for (int i = 0; i < len; i++)
             {
-                for (int j = 0; j < rounded_f; j++)
-                {
-                    if (idx == cipherText.Length) break;
-                    decrypted[i, j] = cipherText[idx];
-                    idx++;
-                }
-            }
-
-            string ans2 = "";
-            for (int i = 0; i < rounded_f; i++)
-            {
+                count = i;
                 for (int j = 0; j < key; j++)
                 {
-                    ans2 += decrypted[j, i];
-                }
-            }
-            return ans2.ToLower();
+                    if (count < cipherText.Length)
+                    {
+                        ret += cipherText[count];
+                        count += len;
+                    }
 
+                }
+
+            }
+            return ret.ToLower();
         }
 
         public string Encrypt(string plainText, int key)
         {
-            int cnt = 0;
-            float cols = Convert.ToSingle(plainText.Length);
-            int rounded_f = (int)(cols + 0.5f);
-            char[,] arr = new char[100, 100];
+            List<string> ciphertext = new List<string>();
 
-            for (int i = 0; i < rounded_f; i++)
-            {
-                for (int j = 0; j < key; j++)
-                {
-                    if (cnt == plainText.Length) break;
-                    arr[j, i] = plainText[cnt];
-                    cnt++;
-                }
-            }
-            string ans = "";
+            int j = 0;
+            int cont = 0;
             for (int i = 0; i < key; i++)
             {
-                for (int j = 0; j < cols; j++)
+                string val = "";
+                j = cont;
+                for (; j < plainText.Length; j += key)
                 {
-                    ans += arr[i, j];
+                    val += plainText[j];
                 }
+                ciphertext.Add(val);
+                cont++;
 
             }
-
-
-
-
-            return ans.ToUpper();
+            string ret = "";
+            for (int i = 0; i < key; i++)
+                ret += ciphertext[i];
+            return ret.ToUpper();
 
         }
     }
