@@ -320,27 +320,31 @@ namespace SecurityLibrary.AES
                         if (galoisFieldInverse[j, k] == 0x9)
                         {
                             //Advanced multiple by 0x9
-                            UInt32 tmp = Convert.ToUInt32((((shiftedmatrix[k, i] << 1) << 1) << 1));//x*2*2*2^x
-                            arrayXor[k] = Convert.ToByte(tmp ^ shiftedmatrix[k, i]);
+                            UInt32 tmp = Convert.ToUInt32((((shiftedmatrix[k, i] << 1) << 1) << 1) ^ shiftedmatrix[k, i]);//x*2*2*2^x
+                            tmp = tmp & 0xff;
+                            arrayXor[k] = Convert.ToByte(tmp);
                         }
                         if (galoisFieldInverse[j, k] == 0xB)
                         {
                             //Advanced multiply by 0xB
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) << 1) ^ shiftedmatrix[k, i]) << 1));//x*2*2^x*2^x
-                            arrayXor[k] = Convert.ToByte(tmp ^ shiftedmatrix[k, i]);
+                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]);//x*2*2^x*2^x
+                            tmp = tmp & 0xff;
+                            arrayXor[k] = Convert.ToByte(tmp);
                         }
                         if (galoisFieldInverse[j, k] == 0xD)
                         {
                             //Advanced multiply by 0xD 
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) << 1));//x*2^x*2*2^x
-                            arrayXor[k] = Convert.ToByte(tmp ^ shiftedmatrix[k, i]);
+                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) << 1) ^ shiftedmatrix[k, i]);//x*2^x*2*2^x
+                            tmp = tmp & 0xff;
+                            arrayXor[k] = Convert.ToByte(tmp);
                         }
 
                         if (galoisFieldInverse[j, k] == 0xE)
                         {
                             //Advanced multiply by 0xE
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]));//x*2^x*2^x*2
-                            arrayXor[k] = Convert.ToByte(tmp << 1);
+                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]) << 1);//x*2^x*2^x*2
+                            tmp = tmp & 0xff;
+                            arrayXor[k] = Convert.ToByte(tmp);
                         }
                     }
                     var cell = arrayXor[0] ^ arrayXor[1] ^ arrayXor[2] ^ arrayXor[3];
