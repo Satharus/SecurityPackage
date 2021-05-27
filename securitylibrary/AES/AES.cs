@@ -534,6 +534,19 @@ namespace SecurityLibrary.AES
             //print_key_matrix();
             return state;
         }
+        byte[,] finalRoundDecrypt(byte[,] state)
+        {
+            state = RoundKey(state, 10);
+            print_mat(state);
+            //print_key_matrix();
+            state = shiftMatrixInverse(state);
+            print_mat(state);
+            //print_key_matrix();
+            state = substituteMatrixInverse(state);
+            print_mat(state);
+            //print_key_matrix();
+            return state;
+        }
         byte[,] main_rounds(byte[,] state, int round)
         {
             state = substituteMatrix(state);
@@ -552,19 +565,19 @@ namespace SecurityLibrary.AES
         }
         byte[,] main_rounds_decryption(byte[,] state, int round)
         {
-            state = shiftMatrixInverse(state);
-            print_mat(state);
-            state = substituteMatrixInverse(state);
-            print_mat(state);
             state = RoundKey(state, round);
             print_mat(state);
             state = mixColsInverse(state);
+            print_mat(state);
+            state = shiftMatrixInverse(state);
+            print_mat(state);
+            state = substituteMatrixInverse(state);
             print_mat(state);
             return state;
         }
         byte[,] firstRoundDecryption(byte[,] state)
         {
-            state = RoundKey(state, 10);
+            state = RoundKey(state, 0);
             return state;
         }
         public override string Decrypt(string cipherText, string key)
@@ -573,8 +586,7 @@ namespace SecurityLibrary.AES
             byte[,] state = makeByteMatrix(cipherText);
             put_key(key);
             implement_key_expansion();
-            print_mat(state);
-            state = firstRoundDecryption(state);
+            state = finalRoundDecrypt(state);
             print_mat(state);
 
             for (int i = 9; i > 0; i--)
@@ -582,7 +594,8 @@ namespace SecurityLibrary.AES
                 state = main_rounds_decryption(state, i);
             }
 
-            state = finalRound(state);
+            state = firstRoundDecryption(state);
+            print_mat(state);
             return makeMatrixString(state);
         }
 
