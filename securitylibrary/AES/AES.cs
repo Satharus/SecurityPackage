@@ -281,18 +281,11 @@ namespace SecurityLibrary.AES
                     {
                         if (galoisField[j, k] == 2)
                         {
-                            UInt32 temp = Convert.ToUInt32(shiftedmatrix[k, i] << 1);
-                            arrayXor[k] = (byte)(temp & 0xFF);
-                            if (shiftedmatrix[k, i] > 127)
-                                arrayXor[k] = Convert.ToByte(arrayXor[k] ^ 27);
+                            arrayXor[k] = advancedmultiplybyTwo(shiftedmatrix[k, i]);
                         }
                         if (galoisField[j, k] == 3)
                         {
-                            UInt32 temp = Convert.ToUInt32(shiftedmatrix[k, i] << 1);
-                            arrayXor[k] = (byte)(temp & 0xFF);
-                            if (shiftedmatrix[k, i] > 127)
-                                arrayXor[k] = Convert.ToByte(arrayXor[k] ^ 27);
-                            arrayXor[k] = Convert.ToByte(arrayXor[k] ^ shiftedmatrix[k, i]);
+                            arrayXor[k] = Convert.ToByte(advancedmultiplybyTwo(shiftedmatrix[k, i]) ^ shiftedmatrix[k, i]);
                         }
 
                         if (galoisField[j, k] == 1)
@@ -306,6 +299,17 @@ namespace SecurityLibrary.AES
             }
             return mixedColsMat;
         }
+
+        byte advancedmultiplybyTwo(byte x)
+        {
+            byte ret;
+            UInt32 temp = Convert.ToUInt32(x << 1);
+            ret = (byte)(temp & 0xFF);
+            if (x > 127)
+                ret = Convert.ToByte(ret ^ 27);
+            return ret;
+        }
+
         byte[,] mixColsInverse(byte[,] shiftedmatrix)
         {
             List<byte> mixedMat = new List<byte>();
@@ -319,32 +323,40 @@ namespace SecurityLibrary.AES
                     {
                         if (galoisFieldInverse[j, k] == 0x9)
                         {
-                            //Advanced multiple by 0x9
-                            UInt32 tmp = Convert.ToUInt32((((shiftedmatrix[k, i] << 1) << 1) << 1) ^ shiftedmatrix[k, i]);//x*2*2*2^x
-                            tmp = tmp & 0xff;
-                            arrayXor[k] = Convert.ToByte(tmp);
+                            byte x0 = shiftedmatrix[k, i];
+                            byte x1 = advancedmultiplybyTwo(x0);
+                            byte x2 = advancedmultiplybyTwo(x1);
+                            byte x3 = advancedmultiplybyTwo(x2);
+                            arrayXor[k] = Convert.ToByte(x3 ^ x0);
                         }
                         if (galoisFieldInverse[j, k] == 0xB)
                         {
-                            //Advanced multiply by 0xB
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]);//x*2*2^x*2^x
-                            tmp = tmp & 0xff;
-                            arrayXor[k] = Convert.ToByte(tmp);
+                            byte x0 = shiftedmatrix[k, i];
+                            byte x1 = advancedmultiplybyTwo(x0);
+                            byte x2 = advancedmultiplybyTwo(x1);
+                            byte x3 = advancedmultiplybyTwo(x2);
+                            arrayXor[k] = Convert.ToByte(x3 ^ x0 ^ x1);
+                            //UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]);//x*2*2^x*2^x
                         }
                         if (galoisFieldInverse[j, k] == 0xD)
                         {
-                            //Advanced multiply by 0xD 
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) << 1) ^ shiftedmatrix[k, i]);//x*2^x*2*2^x
-                            tmp = tmp & 0xff;
-                            arrayXor[k] = Convert.ToByte(tmp);
+                            byte x0 = shiftedmatrix[k, i];
+                            byte x1 = advancedmultiplybyTwo(x0);
+                            byte x2 = advancedmultiplybyTwo(x1);
+                            byte x3 = advancedmultiplybyTwo(x2);
+                            arrayXor[k] = Convert.ToByte(x3 ^ x2 ^ x0);
+                            //UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) << 1) ^ shiftedmatrix[k, i]);//x*2^x*2*2^x
+
                         }
 
                         if (galoisFieldInverse[j, k] == 0xE)
                         {
-                            //Advanced multiply by 0xE
-                            UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]) << 1);//x*2^x*2^x*2
-                            tmp = tmp & 0xff;
-                            arrayXor[k] = Convert.ToByte(tmp);
+                            byte x0 = shiftedmatrix[k, i];
+                            byte x1 = advancedmultiplybyTwo(x0);
+                            byte x2 = advancedmultiplybyTwo(x1);
+                            byte x3 = advancedmultiplybyTwo(x2);
+                            arrayXor[k] = Convert.ToByte(x3 ^ x2 ^ x1);
+                            //UInt32 tmp = Convert.ToUInt32(((((shiftedmatrix[k, i] << 1) ^ shiftedmatrix[k, i]) << 1) ^ shiftedmatrix[k, i]) << 1);//x*2^x*2^x*2
                         }
                     }
                     var cell = arrayXor[0] ^ arrayXor[1] ^ arrayXor[2] ^ arrayXor[3];
@@ -550,6 +562,11 @@ namespace SecurityLibrary.AES
             print_mat(state);
             return state;
         }
+        byte[,] firstRoundDecryption(byte[,] state)
+        {
+            state = RoundKey(state, 10);
+            return state;
+        }
         public override string Decrypt(string cipherText, string key)
         {
 
@@ -557,7 +574,7 @@ namespace SecurityLibrary.AES
             put_key(key);
             implement_key_expansion();
             print_mat(state);
-            state = shiftMatrixInverse(state);
+            state = firstRoundDecryption(state);
             print_mat(state);
 
             for (int i = 9; i > 0; i--)
