@@ -317,22 +317,29 @@ namespace SecurityLibrary.AES
                 {
                     for (int k = 0; k < 4; k++)
                     {
-                        if (galoisField[j, k] == 0x9)
+                        if (galoisFieldInverse[j, k] == 0x9)
                         {
-                            //Advanced multiple by 0x9
+                           UInt32 tmp= Convert.ToUInt32((((shiftedmatrix[k, i] << 1)<< 1)<<1));//x*2*2*2^x
+                           arrayXor[k]=Convert.ToByte(tmp^shiftedmatrix[k,i]);
                         }
-                        if (galoisField[j, k] == 0xB)
+                        if (galoisFieldInverse[j, k] == 0xB)
                         {
                             //Advanced multiply by 0xB
+                            UInt32 tmp= Convert.ToUInt32(((((shiftedmatrix[k, i] << 1)<<1)^shiftedmatrix[k,i])<<1));//x*2*2^x*2^x
+                            arrayXor[k]=Convert.ToByte(tmp^shiftedmatrix[k,i]);
                         }
-                        if (galoisField[j, k] == 0xD)
+                        if (galoisFieldInverse[j, k] == 0xD)
                         {
                             //Advanced multiply by 0xD 
+                             UInt32 tmp= Convert.ToUInt32(((((shiftedmatrix[k, i] << 1)^shiftedmatrix[k,i])<<1)<<1));//x*2^x*2*2^x
+                            arrayXor[k]=Convert.ToByte(tmp^shiftedmatrix[k,i]);
                         }
 
-                        if (galoisField[j, k] == 0xE)
+                        if (galoisFieldInverse[j, k] == 0xE)
                         {
                             //Advanced multiply by 0xE
+                            UInt32 tmp= Convert.ToUInt32(((((shiftedmatrix[k, i] << 1)^shiftedmatrix[j,i])<<1)^shiftedmatrix[j,i]));//x*2^x*2^x*2
+                            arrayXor[k]=Convert.ToByte(tmp<<1);
                         }
                     }
                     var cell = arrayXor[0] ^ arrayXor[1] ^ arrayXor[2] ^ arrayXor[3];
